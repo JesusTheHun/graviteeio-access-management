@@ -25,6 +25,7 @@ import io.gravitee.am.model.oidc.JWKSet;
 import io.gravitee.am.service.utils.SetterUtils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -397,7 +398,10 @@ public class DynamicClientRegistrationRequest {
 
     public Optional<List<String>> getScope() {
         if (this.scope == null) return null; //Keep null to avoid patch...
-        return Optional.of(Arrays.asList(scope.orElse("").split(SCOPE_DELIMITER)));
+        if (this.scope.isPresent() && this.scope.get().trim().isEmpty()) {
+            return Optional.of(Collections.EMPTY_LIST);
+        }
+        return Optional.of(Arrays.asList(scope.get().split(SCOPE_DELIMITER)));
     }
 
     public void setScope(Optional<String> scope) {

@@ -90,4 +90,10 @@ public class DynamicClientRegistrationRequestTest {
         assertNull("Response type should be set to null", result.getResponseTypes());
         assertNull("Default max age should be set to null", result.getDefaultMaxAge());
     }
+
+    @Test
+    public void testGetScope() {
+        patcher.setScope(Optional.of(""));
+        assertTrue(patcher.getScope().get().isEmpty());
+    }
 }
